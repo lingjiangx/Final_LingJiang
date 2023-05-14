@@ -147,10 +147,15 @@ class Account:
         with open('transactions.json', 'r') as file:
             transactions = json.load(file)
 
+        found_transactions = []
+
         for transaction in transactions:
             if transaction['account_id'] == account_id:
+                found_transactions.append(transaction)
+
+        if found_transactions:
+            for transaction in found_transactions:
                 print(transaction)
-                break
         else:
             print("Please input a valid ID or You don't have any transactions")
 
