@@ -1,0 +1,32 @@
+[
+    {
+        "account_id": "8fbf4881",
+        "name": "Luke",
+        "age": 30,
+        "account_type": "Checking Account"
+    },
+    {
+        "account_id": "d56b876e",
+        "name": "Mando",
+        "age": 40,
+        "account_type": "Checking Account"
+    },
+    {
+        "account_id": "602d8825",
+        "name": "Grogu",
+        "age": 17,
+        "account_type": "Saving Account"
+    },
+    {
+        "account_id": "452a0667",
+        "name": "Jawa",
+        "age": 20,
+        "account_type": "Checking Account"
+    },
+    {
+        "account_id": "6b8f1c2c",
+        "name": "Ling",
+        "age": 17,
+        "account_type": "Saving Account"
+    }
+]

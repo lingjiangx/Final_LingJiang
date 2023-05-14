@@ -1,0 +1,22 @@
+[
+    {
+        "customer_id": "d5f283cd",
+        "name": "Luke",
+        "age": 30
+    },
+    {
+        "customer_id": "9dd3bdf8",
+        "name": "Grogu",
+        "age": 16
+    },
+    {
+        "customer_id": "4e6d1c88",
+        "name": "Mando",
+        "age": 40
+    },
+    {
+        "customer_id": "f6febd06",
+        "name": "Jawa",
+        "age": 19
+    }
+]
