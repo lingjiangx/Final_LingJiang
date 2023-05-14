@@ -64,7 +64,7 @@ class Account:
     def save_accounts_to_file(self):
         with open('accounts.json', 'w') as file:
             json.dump(self.accounts, file, indent=4)
-        print("Accounts created successfully.")
+
 
     def create_account(self, name, age):
         if age >= 18:
@@ -87,16 +87,24 @@ class Account:
 
         self.save_accounts_to_file()
 
+    import json
+
     def delete_account(self, account_id):
         with open('accounts.json', 'r') as file:
             accounts = json.load(file)
 
+        account_found = False
+
         for account in accounts.copy():
             if account['account_id'] == account_id:
                 accounts.remove(account)
-                self.save_accounts_to_file()
+                account_found = True
                 break
 
+        if account_found:
+            with open('accounts.json', 'w') as file:
+                json.dump(accounts, file, indent=4)
+            print("Account deleted successfully.")
         else:
             print("Account ID not found.")
 

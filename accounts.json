@@ -22,11 +22,5 @@
         "name": "Jawa",
         "age": 20,
         "account_type": "Checking Account"
-    },
-    {
-        "account_id": "6b8f1c2c",
-        "name": "Ling",
-        "age": 17,
-        "account_type": "Saving Account"
     }
 ]
