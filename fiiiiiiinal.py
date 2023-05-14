@@ -6,6 +6,14 @@ import datetime
 class Customer:
     def __init__(self):
         self.customers = []
+        self.load_customers_from_file()
+
+    def load_customers_from_file(self):
+        try:
+            with open('customers.json', 'r') as file:
+                self.customers = json.load(file)
+        except FileNotFoundError:
+            self.customers = []
 
     def create_customer(self, name, age):
         customer_id = str(uuid.uuid4())[:8]  # Truncate UUID to 8 characters
