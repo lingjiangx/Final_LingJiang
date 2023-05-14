@@ -249,69 +249,67 @@ class SavingAccount(Account):
     def __init__(self):
         super().__init__()
 
+
     def withdraw_from_saving(self, account_id, amount):
         with open('transactions.json', 'r') as file:
             transactions = json.load(file)
 
-            current_month = datetime.datetime.now().strftime("%B")
-            is_transaction_allowed = True
+        current_month = datetime.datetime.now().strftime("%B")
+        is_transaction_allowed = True
 
-            for transaction in transactions:
-                if transaction["account_id"] == account_id:
-                    if transaction["current_month"] == current_month:
-                        if "withdraw amount" in transaction or "transfer out amount" in transaction:
-                            is_transaction_allowed = False
-                            break
+        for transaction in transactions:
+            if transaction["account_id"] == account_id and transaction["current_month"] == current_month:
+                if "withdraw amount" in transaction or "transfer out amount" in transaction:
+                    is_transaction_allowed = False
+                    break
 
-            if is_transaction_allowed:
-                print("You are allowed to make a withdrawal or transfer.")
-                last_balance = transaction['balance']
-                if last_balance - amount >= 0.0:
-                    new_balance = last_balance - amount
-                    print(f"Your updated balance is {new_balance} Withdrawal successful.")
-                    transaction_id = str(uuid.uuid4())[:8]  # Truncate UUID to 8 characters
-                    current_month = datetime.datetime.now().strftime("%B")
+        if is_transaction_allowed:
+            print("You are allowed to make a withdrawal or transfer.")
+            last_balance = transaction['balance']
+            if last_balance - amount >= 0.0:
+                new_balance = last_balance - amount
+                print(f"Your updated balance is {new_balance}. Withdrawal successful.")
 
-                    updated_transaction = {
-                        'current_month': current_month,
-                        'transaction_id': transaction_id,
-                        'account_id': account_id,
-                        'withdraw amount': amount,
-                        'balance': new_balance}
+                transaction_id = str(uuid.uuid4())[:8]  # Truncate UUID to 8 characters
+                current_month = datetime.datetime.now().strftime("%B")
 
-                    self.transactions.append(updated_transaction)
-                    print(
-                        f"Transaction detail-transaction_id:{transaction_id}, account_id:{account_id},withdraw amount:{amount},balance:{new_balance}")
-                    self.save_transactions_to_file()
+                updated_transaction = {
+                    'current_month': current_month,
+                    'transaction_id': transaction_id,
+                    'account_id': account_id,
+                    'withdraw amount': amount,
+                    'balance': new_balance}
 
-                else:
-                    print("Insufficient funds.")
+                transactions.append(updated_transaction)
+                self.save_transactions_to_file()
 
+                print(
+                    f"Transaction detail - transaction_id: {transaction_id}, account_id: {account_id}, withdraw amount: {amount}, balance: {new_balance}")
             else:
-                print("You are only allowed to transfer or withdraw once per month. Please try next month.")
+                print("Insufficient funds.")
+        else:
+            print("You are only allowed to transfer or withdraw once per month. Please try next month.")
 
-    def transfer_from_saving(self, account_id, amount, to_amount_id):
+
+    def transfer_from_saving(self, account_id, amount, to_account_id):
         with open('transactions.json', 'r') as file:
             transactions = json.load(file)
 
         current_month = datetime.datetime.now().strftime("%B")
+        is_transaction_allowed = True
 
         for transaction in transactions:
-            if transaction["account_id"] == account_id:
-                if any("May" in transaction.values() for transaction in transactions):
-                    if any("withdraw amount" or "transfer our amount" in transaction for transaction in transactions):
-                        print("You are only allowed to transfer or withdraw once per month. Please try next month.")
-                        break
+            if transaction["account_id"] == account_id and transaction["current_month"] == current_month:
+                if "withdraw amount" in transaction or "transfer out amount" in transaction:
+                    is_transaction_allowed = False
+                    break
 
-                else:
-                    last_balance = transaction['balance']
-                    if last_balance - amount >= 0.0:
-                        new_balance = last_balance - amount
-                        print(f"{new_balance} transfer out successful.")
-                        break
-                    else:
-                        print("Insufficient funds.")
-                        break
+        if is_transaction_allowed:
+            print("You are allowed to make a withdrawal or transfer.")
+            last_balance = transaction['balance']
+            if last_balance - amount >= 0.0:
+                new_balance = last_balance - amount
+                print(f"Your updated balance is {new_balance}. Transder Out successful.")
 
                 transaction_id = str(uuid.uuid4())[:8]  # Truncate UUID to 8 characters
                 current_month = datetime.datetime.now().strftime("%B")
@@ -323,12 +321,16 @@ class SavingAccount(Account):
                     'transfer out amount': amount,
                     'balance': new_balance}
 
-                self.transactions.append(updated_transaction)
-                print(
-                    f"Transaction detail-transaction_id:{transaction_id}, account_id:{account_id},transfer out amount:{amount},balance:{new_balance}")
+                transactions.append(updated_transaction)
                 self.save_transactions_to_file()
+                account.transfer_to()
 
-                account.transfer_to(account_id, amount, to_account_id)
+                print(
+                    f"Transaction detail - transaction_id: {transaction_id}, account_id: {account_id}, transfer out amount: {amount}, balance: {new_balance}")
+            else:
+                print("Insufficient funds.")
+        else:
+            print("You are only allowed to transfer or withdraw once per month. Please try next month.")
 
 
 class CheckingAccount(Account):
