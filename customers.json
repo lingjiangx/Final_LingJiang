@@ -8,5 +8,20 @@
         "customer_id": "939ec49c",
         "name": "Jawa",
         "age": 19
+    },
+    {
+        "customer_id": "51a5f46c",
+        "name": "Mando",
+        "age": 40
+    },
+    {
+        "customer_id": "89dbe8a3",
+        "name": "Boba Fett",
+        "age": 50
+    },
+    {
+        "customer_id": "8dd9295c",
+        "name": "Grogu",
+        "age": 16
     }
 ]

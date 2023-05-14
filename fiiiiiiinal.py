@@ -95,7 +95,7 @@ class Account:
             if account['account_id'] == account_id:
                 accounts.remove(account)
                 self.save_accounts_to_file()
-
+                break
         else:
             print("Account ID not found.")
 
@@ -410,7 +410,7 @@ while True:
         name = input("Enter your name: ")
         age = int(input("Enter your age: "))
         customer.create_customer(name, age)
-        customer.save_customers_to_file()
+
 
     elif choice == "2":
         name = input("Enter your name: ")
